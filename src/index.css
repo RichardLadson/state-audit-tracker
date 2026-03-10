@@ -83,11 +83,11 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(0 0% 95%);
+  background: hsl(214 20% 90%);
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(0 0% 78%);
+  background: hsl(214 15% 72%);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(0 0% 65%);
+  background: hsl(214 15% 60%);
 }
