@@ -12,51 +12,51 @@
 
 @layer base {
   :root {
-    --background: 214 20% 92%;
-    --foreground: 215 25% 15%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 88%;
 
-    --card: 213 18% 96%;
-    --card-foreground: 215 25% 15%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 88%;
 
-    --popover: 213 18% 96%;
-    --popover-foreground: 215 25% 15%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 88%;
 
-    --primary: 213 70% 45%;
+    --primary: 213 70% 59%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 214 15% 87%;
-    --secondary-foreground: 215 25% 15%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 88%;
 
-    --muted: 214 15% 87%;
-    --muted-foreground: 215 12% 45%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 214 18% 84%;
-    --accent-foreground: 215 25% 15%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 88%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 15% 78%;
-    --input: 214 15% 78%;
-    --ring: 213 70% 45%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 213 70% 59%;
 
     --radius: 0px;
 
-    --lane-a: 213 70% 45%;
-    --lane-b: 270 65% 48%;
-    --warning: 28 100% 50%;
-    --confidence-high: 215 25% 15%;
-    --confidence-medium: 215 12% 45%;
-    --confidence-low: 215 10% 60%;
+    --lane-a: 213 70% 59%;
+    --lane-b: 270 99% 53%;
+    --warning: 28 100% 55%;
+    --confidence-high: 0 0% 100%;
+    --confidence-medium: 0 0% 63%;
+    --confidence-low: 0 0% 40%;
 
-    --sidebar-background: 214 18% 90%;
-    --sidebar-foreground: 215 25% 15%;
-    --sidebar-primary: 213 70% 45%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 88%;
+    --sidebar-primary: 213 70% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 214 18% 84%;
-    --sidebar-accent-foreground: 215 25% 15%;
-    --sidebar-border: 214 15% 78%;
-    --sidebar-ring: 213 70% 45%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 88%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 213 70% 59%;
   }
 }
 
@@ -83,11 +83,11 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(214 20% 90%);
+  background: hsl(0 0% 4%);
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(214 15% 72%);
+  background: hsl(0 0% 20%);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(214 15% 60%);
+  background: hsl(0 0% 30%);
 }
