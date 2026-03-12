@@ -131,11 +131,13 @@ export function StateCardComponent({ card, onClick, isDragging, compact }: State
       <div className="flex items-center justify-between mb-1">
         <BlockerStrip card={card} />
         <div className="flex items-center gap-1">
-          {card.failClosedPreserved ? (
-            <Lock className="w-2.5 h-2.5 text-success" title="Fail-closed preserved" />
-          ) : (
-            <Unlock className="w-2.5 h-2.5 text-warning" title="Fail-closed NOT preserved" />
-          )}
+          <span title={card.failClosedPreserved ? 'Fail-closed preserved' : 'Fail-closed NOT preserved'}>
+            {card.failClosedPreserved ? (
+              <Lock className="w-2.5 h-2.5 text-success" />
+            ) : (
+              <Unlock className="w-2.5 h-2.5 text-warning" />
+            )}
+          </span>
         </div>
       </div>
 
