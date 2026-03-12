@@ -1,23 +1,32 @@
 import { useState } from 'react';
-import { StateCard, ColumnId, COLUMNS } from '@/types/audit';
-import { canMoveToColumn } from '@/hooks/useAuditStore';
+import { StateCard, StageColumnId, Swimlane, STAGE_COLUMNS } from '@/types/audit';
+import { canMoveToStage } from '@/hooks/useAuditStore';
+import { AlertTriangle } from 'lucide-react';
 
 interface TransitionModalProps {
   card: StateCard;
-  targetColumn: ColumnId;
+  targetSwimlane: Swimlane;
+  targetStage: StageColumnId;
   onCommit: (reason: string) => void;
   onCancel: () => void;
 }
 
-export function TransitionModal({ card, targetColumn, onCommit, onCancel }: TransitionModalProps) {
+const SWIMLANE_LABELS: Record<Swimlane, string> = {
+  'lane-a-active': 'Lane A — Active',
+  'lane-b-active': 'Lane B — Active',
+  'full-enable': 'Full-Enable Track',
+  'terminal': 'Terminal States',
+};
+
+export function TransitionModal({ card, targetSwimlane, targetStage, onCommit, onCancel }: TransitionModalProps) {
   const [reason, setReason] = useState('');
-  const check = canMoveToColumn(card, targetColumn);
+  const check = canMoveToStage(card, targetSwimlane, targetStage);
 
   if (!check.allowed) {
     return (
       <div className="fixed inset-0 bg-background/80 flex items-center justify-center z-50">
-        <div className="bg-card border border-border p-4 w-[400px]">
-          <h3 className="font-mono text-sm font-semibold mb-2 text-destructive">Transition blocked</h3>
+        <div className="bg-card border border-border p-4 w-[440px]">
+          <h3 className="font-mono text-sm font-semibold mb-2 text-critical">Transition Blocked</h3>
           <p className="text-xs text-muted-foreground mb-4 font-sans">{check.reason}</p>
           <button
             onClick={onCancel}
@@ -32,13 +41,27 @@ export function TransitionModal({ card, targetColumn, onCommit, onCancel }: Tran
 
   return (
     <div className="fixed inset-0 bg-background/80 flex items-center justify-center z-50">
-      <div className="bg-card border border-border p-4 w-[400px]">
+      <div className="bg-card border border-border p-4 w-[440px]">
         <h3 className="font-mono text-sm font-semibold mb-1">Transition Commit</h3>
         <p className="text-xs text-muted-foreground mb-3 font-sans">
-          {card.stateCode}: {card.column} → {targetColumn}
+          <span className="font-mono font-semibold text-foreground">{card.stateCode}</span>
+          {' '}{SWIMLANE_LABELS[card.swimlane]} / {card.stageColumn}
+          {' → '}{SWIMLANE_LABELS[targetSwimlane]} / {targetStage}
         </p>
+
+        {check.warnings && check.warnings.length > 0 && (
+          <div className="mb-3 border border-warning/30 bg-warning/5 p-2 space-y-1">
+            {check.warnings.map((w, i) => (
+              <div key={i} className="flex items-start gap-1.5">
+                <AlertTriangle className="w-3 h-3 text-warning shrink-0 mt-0.5" />
+                <span className="text-[10px] font-mono text-warning">{w}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         <label className="block font-mono text-xs text-muted-foreground mb-1">
-          Transition Reason:
+          Transition Reason (required):
         </label>
         <input
           type="text"

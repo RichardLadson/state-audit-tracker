@@ -1,5 +1,7 @@
 export type Lane = 'A' | 'B';
 
+export type Swimlane = 'lane-a-active' | 'lane-b-active' | 'full-enable' | 'terminal';
+
 export type StateClass = 'standard likely' | 'model-risk' | 'special-case' | 'likely NO-GO' | 'activation candidate';
 
 export type Confidence = 'Low' | 'Medium' | 'High';
@@ -17,6 +19,35 @@ export type ActivationStatus =
 
 export type WorkflowStatus = 'not started' | 'in progress' | 'packaged' | 'finalized';
 
+export type OperativePosture =
+  | 'reference-only'
+  | 'evidence-remediation'
+  | 'runtime-pending'
+  | 'policy-advanced'
+  | 'controlled-enable'
+  | 'full-enable-track'
+  | 'GO-hold'
+  | 'NO-GO-finalized'
+  | 'enabled';
+
+export type TerminalDisposition = 'GO-hold' | 'NO-GO-finalized' | null;
+
+export const STAGE_COLUMNS = [
+  'Preflight',
+  'Classification',
+  'Scaffold / Setup',
+  'Evidence Collection',
+  'Traceability Closure',
+  'Policy Closure',
+  'Runtime Closure',
+  'Governance',
+  'Controlled Enable',
+  'Reconciliation',
+] as const;
+
+export type StageColumnId = typeof STAGE_COLUMNS[number];
+
+// Keep old columns for migration
 export const COLUMNS = [
   'Blocked',
   'Preflighted',
@@ -31,6 +62,13 @@ export const COLUMNS = [
 
 export type ColumnId = typeof COLUMNS[number];
 
+export interface CriticalUnresolvedField {
+  field: string;
+  status: 'unresolved' | 'plausible-not-closed' | 'missing' | 'pending';
+  note: string;
+  activationBlocking: boolean;
+}
+
 export interface Blockers {
   B1: BlockerStatus;
   B2: BlockerStatus;
@@ -40,10 +78,16 @@ export interface Blockers {
 }
 
 export interface TransitionLogEntry {
-  from: ColumnId;
-  to: ColumnId;
+  from: string;
+  to: string;
   reason: string;
   timestamp: string;
+}
+
+export interface HistoryEntry {
+  date: string;
+  event: string;
+  detail: string;
 }
 
 export interface StateCard {
@@ -51,18 +95,28 @@ export interface StateCard {
   stateCode: string;
   stateName: string;
   lane: Lane;
+  swimlane: Swimlane;
+  stageColumn: StageColumnId;
+  operativePosture: OperativePosture;
+  terminalDisposition: TerminalDisposition;
   stateClass: StateClass;
   confidence: Confidence;
   runMode: RunMode;
   blockers: Blockers;
   activationStatus: ActivationStatus;
   workflowStatus: WorkflowStatus;
+  policyClosure: boolean;
+  runtimeClosure: boolean;
   failClosedPreserved: boolean;
   constantsActivated: boolean;
+  criticalUnresolvedFields: CriticalUnresolvedField[];
   statusFilePath: string;
   finalReadoutPath: string;
   latestCommit: string;
   notes: string;
-  column: ColumnId;
+  auditNotes: string;
+  lessonsLearned: string;
+  history: HistoryEntry[];
+  column: ColumnId; // legacy
   transitionLog: TransitionLogEntry[];
 }
